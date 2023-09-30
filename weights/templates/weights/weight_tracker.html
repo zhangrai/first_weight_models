@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include Bootstrap CSS (you can use a local or CDN link) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'weights/js/web_chart.js' %}" defer></script>
+    <script src="{% static 'weights/js/person_scripts.js' %}" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Weight Tracker</title>
+</head>
+<body>
+    <!-- container with choosing person and eventually for populating weight entries-->
+    <div class="container mt-5">
+        <h2>Weight Tracker</h2>
+        <div class = "row">
+            <div class = "col-md-4">
+            <form id="personSelectForm">
+                <div class="form-group" class = "mb-3">
+                    <label for="personSelect">Select a Person:</label>
+                    <select class="form-control" id="personSelect">
+                        <!-- Populate the dropdown with person options using JavaScript -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">View Weights</button>
+            </form>
+            </div>
+        </div>
+    
+        <!-- creates addition entry layout on right hand side. JS will populate once person is fetched-->
+
+        <div class = "col-md-8" style = "display:none" id = "addWeightFormContainer"> 
+            <form>
+                <div class="mb-3">
+                    <label for="inputWeight" class="form-label">Weight</label>
+                    <input type="text" class="form-control" id="inputWeight" placeholder="Enter weight">
+                </div>
+                <div class="mb-3">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="inputDate">
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success">Add Entry</button>
+                </div>
+            </form>
+        </div>
+        </div>
+
+
+    <div class="row mt-4" style="display: none;" id="weightTable">
+        <h3>Weight Entries</h3>
+        <div class  = "col-md-12">
+            <table class="table table-bordered" >
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Weight (kg)</th>
+                        <th>Edit/Save</th>
+                        <th>Delete</th>
+                        <th>Cancel</th>
+                    </tr>
+                </thead>
+                <tbody id="weightTableBody">
+                    <!-- Weight data will be inserted here using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+            <!-- Chart Section -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+
+
+
+    <!-- Include Bootstrap JS (you can use a local or CDN link) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
