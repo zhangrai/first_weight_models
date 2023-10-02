@@ -5,8 +5,6 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from django.shortcuts import render
 
-def weight_tracker(request):
-    return render(request,"weights/weight_tracker.html")
 
 class PersonListCreateView(generics.ListCreateAPIView):
     queryset = Person.objects.all()
@@ -17,20 +15,29 @@ class PersonDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PersonSerializer
 
 class WeightListCreateView(generics.ListCreateAPIView):
+    # creates weights
     queryset = Weight.objects.all()
     serializer_class = WeightSerializer
+    ordering = ['-w_date']
+
 class WeightRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Weight.objects.all()
     serializer_class = WeightSerializer
+    ordering = ['-w_date']
 
 class PersonWeightsView(generics.ListAPIView):
     serializer_class = WeightSerializer
+    ordering = ['-w_date']
 
     def get_queryset(self):
         # Get the person_id from the URL parameter
         person_id = self.kwargs['id']
 
         # Filter Weight objects based on the person's ID
-        queryset = Weight.objects.filter(person=person_id)
+        queryset = Weight.objects.filter(person=person_id).order_by('w_date')
 
         return queryset
+
+class WeightCreateView(generics.CreateAPIView):
+    queryset = Weight.objects.all()
+    serializer_class = WeightSerializer
