@@ -4,7 +4,7 @@ console.log("loading charts");
 function createChart(selectedPersonId){
     console.log(`selected person: ${selectedPersonId}`);
     // Fetch data from your DRF API
-    fetch(`/api/persons/${selectedPersonId}/weights`)
+    fetch(`/persons/${selectedPersonId}/weights`)
         .then(response => response.json())
         .then(data => {
             // Prepare data for Chart.js
@@ -28,10 +28,11 @@ function createChart(selectedPersonId){
                 });
             }
             else {
-                
+
                 weightChart.data.labels = labels;
                 weightChart.data.datasets[0].data = values;
                 weightChart.update()
+                console.log("Chart updated!")
             };
             
         })

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to fetch weight entries for a selected person
     function fetchWeightEntries(selectedPersonId) {
         // Fetch weight entries for the selected person
-        fetch(`/api/persons/${selectedPersonId}/weights/`)
+        fetch(`/persons/${selectedPersonId}/weights/`)
             .then((response) => response.json())
             .then((data) => {
                 // Clear existing table rows
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // if save button pressed, handle saving of data
             const inputWeight = weightCell.querySelector("input");
             const inputDate = dateCell.querySelector("input");
-            const url = `/api/weights/${buttonId}/`;
+            const url = `/weights/${buttonId}/`;
             
             data = {
                 w_date:inputDate.value,
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const dateCell = row.cells[0];
         const weightCell = row.cells[1];
         const editCell = row.cells[2];
-        url = `/api/weights/${entryId}/`;
+        url = `/weights/${entryId}/`;
         fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -207,6 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
         createChart(selectedPersonId);
     });
 
+    // form for adding a weight. 
     document.getElementById('addWeightForm').addEventListener('submit', function(e) {
         e.preventDefault();
         console.log("activating addweightForm");
@@ -220,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         console.log(context);
         // AJAX request using fetch
-        fetch('/api/weights/create/', {
+        fetch('/weights/create/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -247,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     // Fetch and populate the dropdown with persons when the page loads
-    fetch('/api/persons/')
+    fetch('/persons/')
         .then((response) => response.json())
         .then((data) => {
             const personSelect = document.getElementById('personSelect');
