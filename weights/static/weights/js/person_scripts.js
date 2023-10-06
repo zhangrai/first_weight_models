@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to fetch weight entries for a selected person
     function fetchWeightEntries(selectedPersonId) {
         // Fetch weight entries for the selected person
-        fetch(`/persons/${selectedPersonId}/weights/`)
+        fetch(`/api/persons/${selectedPersonId}/weights/`)
             .then((response) => response.json())
             .then((data) => {
                 // Clear existing table rows
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // if save button pressed, handle saving of data
             const inputWeight = weightCell.querySelector("input");
             const inputDate = dateCell.querySelector("input");
-            const url = `/weights/${buttonId}/`;
+            const url = `/api/weights/${buttonId}/`;
             
             data = {
                 w_date:inputDate.value,
@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(url, {
                 method: 'PATCH',
                 headers: {
+                    'X-CSRFToken': getCookie('csrftoken'), // Include the CSRF token from the cookie
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const dateCell = row.cells[0];
         const weightCell = row.cells[1];
         const editCell = row.cells[2];
-        url = `/weights/${entryId}/`;
+        url = `/api/weights/${entryId}/`;
         fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -221,9 +222,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         console.log(context);
         // AJAX request using fetch
-        fetch('/weights/create/', {
+        fetch('/api/weights/create/', {
             method: 'POST',
             headers: {
+                'X-CSRFToken': getCookie('csrftoken'), // Include the CSRF token from the cookie
                 'Content-Type': 'application/json',
                 // Add any additional headers if needed
             },
@@ -248,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     // Fetch and populate the dropdown with persons when the page loads
-    fetch('/persons/')
+    fetch('/api/persons/')
         .then((response) => response.json())
         .then((data) => {
             const personSelect = document.getElementById('personSelect');
@@ -260,6 +262,22 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         })
         .catch((error) => console.error('Error fetching persons:', error));
+
+        // Function to get the CSRF token from the cookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
    
 });
