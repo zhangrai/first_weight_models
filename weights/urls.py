@@ -9,5 +9,4 @@ urlpatterns = [
     path('weights/create/',WeightCreateView.as_view(),name = 'weight-create'),
     path('weights/<int:pk>/', WeightRetrieveUpdateDestroyView.as_view(), name='weight-retrieve-update-destroy'),
     path('persons/<int:id>/weights/', PersonWeightsView.as_view(), name='person-weights'),
-    path("weight_tracker/",weight_tracker,name = "bootstraptest"),
 ]
