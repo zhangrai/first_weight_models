@@ -32,6 +32,7 @@
         <!-- creates addition entry layout on right hand side. JS will populate once person is fetched-->
         <div class="col-md-8" style="display:block" id="addWeightFormContainer">
             <form id="addWeightForm">
+                {% csrf_token %}
                 <div class="mb-3">
                     <label for="inputWeight" class="form-label">Weight</label>
                     <input type="text" class="form-control" id="inputWeight" placeholder="Enter weight" required>
