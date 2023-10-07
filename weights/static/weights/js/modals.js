@@ -14,7 +14,9 @@ function deleteEntry() {
     var entryId = $('#deleteConfirmationModal').data('entry-id');
     
     // Delete ID, refresh table and chart
+
     console.log('Entry with ID ' + entryId + ' deleting');
+
     const url = `/api/weights/${entryId}/`;  
     const row = document.getElementById(`row${entryId}`);
     const selectedPersonId = document.getElementById("personSelect").value;
